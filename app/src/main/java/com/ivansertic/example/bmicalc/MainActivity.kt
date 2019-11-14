@@ -27,7 +27,17 @@ class MainActivity : AppCompatActivity() {
             if (et_height.text.isNullOrEmpty() || et_weight.text.isNullOrEmpty()) {
                 tv_result.visibility = View.INVISIBLE
                 iv_picture.visibility = View.INVISIBLE
-                Toast.makeText(this, "Height and weight cannot be empty!!", Toast.LENGTH_LONG).show()
+
+                if (et_height.text.isNullOrEmpty()) {
+                    et_height.error = "Height required"
+                    et_height.requestFocus()
+                } else {
+                    et_weight.error = "Height required"
+                    et_weight.requestFocus()
+                }
+
+                Toast.makeText(this, "Height and weight cannot be empty!!", Toast.LENGTH_LONG)
+                    .show()
             } else {
 
                 val height = et_height.text.toString().toDouble()
