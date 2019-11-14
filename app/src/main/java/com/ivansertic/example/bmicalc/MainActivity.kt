@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.math.roundToLong
 
 class MainActivity : AppCompatActivity() {
 
