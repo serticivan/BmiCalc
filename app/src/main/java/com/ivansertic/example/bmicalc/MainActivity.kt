@@ -1,44 +1,56 @@
 package com.ivansertic.example.bmicalc
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        calculateBmi()
-
-
-    }
-
-    private fun calculateBmi() {
+        val database = Room.databaseBuilder(
+            this,
+            ResultDatabase::class.java,
+            "results_database"
+        ).allowMainThreadQueries()
+            .build()
 
         btn_calculate.setOnClickListener {
 
-            if (et_height.text.isNullOrEmpty() || et_weight.text.isNullOrEmpty()) {
+            if (et_height.text.isNullOrEmpty() || et_weight.text.isNullOrEmpty() || et_name.text.isNullOrEmpty()) {
                 tv_result.visibility = View.INVISIBLE
                 iv_picture.visibility = View.INVISIBLE
 
-                if (et_height.text.isNullOrEmpty()) {
-                    et_height.error = "Height required"
-                    et_height.requestFocus()
-                } else {
-                    et_weight.error = "Height required"
-                    et_weight.requestFocus()
+                when {
+                    et_height.text.isNullOrEmpty() -> {
+                        et_height.error = "Height required"
+                        et_height.requestFocus()
+                    }
+                    et_name.text.isNullOrEmpty() -> {
+                        et_name.error = "Name required"
+                        et_name.requestFocus()
+                    }
+                    else -> {
+                        et_weight.error = "Height required"
+                        et_weight.requestFocus()
+                    }
                 }
 
-                Toast.makeText(this, "Height and weight cannot be empty!!", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Name, height or weight cannot be empty!!", Toast.LENGTH_LONG)
                     .show()
             } else {
 
+                val name = et_name.text.toString()
                 val height = et_height.text.toString().toDouble()
                 val weight = et_weight.text.toString().toDouble()
                 val result = (weight / (height * height)) * 10000
@@ -58,6 +70,9 @@ class MainActivity : AppCompatActivity() {
                     tv_result.visibility = View.VISIBLE
                     iv_picture.visibility = View.VISIBLE
 
+                    database.resultDao().insertResult(Result(name = name, height = height, weight = weight, calculatedBmi = rounded))
+
+
                 } else {
                     tv_result.visibility = View.INVISIBLE
                     iv_picture.visibility = View.INVISIBLE
@@ -72,5 +87,18 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+
+        btn_show_results.setOnClickListener {
+            val intent = Intent(this, ResultsActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
+
+    private fun calculateBmi() {
+
+
+    }
+
 }
