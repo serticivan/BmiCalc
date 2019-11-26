@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.result_row.*
 
 class MainActivity : AppCompatActivity() {
-
 
 
     @SuppressLint("SetTextI18n")
@@ -25,6 +26,34 @@ class MainActivity : AppCompatActivity() {
         ).allowMainThreadQueries()
             .build()
 
+
+        btn_save.setOnClickListener {
+
+            if (et_height.text.isNullOrEmpty() || et_weight.text.isNullOrEmpty() || et_name.text.isNullOrEmpty()) {
+                tv_result.visibility = View.INVISIBLE
+                iv_picture.visibility = View.INVISIBLE
+
+                when {
+                    et_name.text.isNullOrEmpty() -> {
+                        et_name.error = "Name required"
+                        et_name.requestFocus()
+                    }
+                    et_height.text.isNullOrEmpty() -> {
+                        et_height.error = "Height required"
+                        et_height.requestFocus()
+                    }
+                    else -> {
+                        et_weight.error = "Height required"
+                        et_weight.requestFocus()
+                    }
+                }
+
+                Toast.makeText(this, "You cannot save empty record", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
         btn_calculate.setOnClickListener {
 
             if (et_height.text.isNullOrEmpty() || et_weight.text.isNullOrEmpty() || et_name.text.isNullOrEmpty()) {
@@ -32,13 +61,13 @@ class MainActivity : AppCompatActivity() {
                 iv_picture.visibility = View.INVISIBLE
 
                 when {
-                    et_height.text.isNullOrEmpty() -> {
-                        et_height.error = "Height required"
-                        et_height.requestFocus()
-                    }
                     et_name.text.isNullOrEmpty() -> {
                         et_name.error = "Name required"
                         et_name.requestFocus()
+                    }
+                    et_height.text.isNullOrEmpty() -> {
+                        et_height.error = "Height required"
+                        et_height.requestFocus()
                     }
                     else -> {
                         et_weight.error = "Height required"
@@ -70,7 +99,24 @@ class MainActivity : AppCompatActivity() {
                     tv_result.visibility = View.VISIBLE
                     iv_picture.visibility = View.VISIBLE
 
-                    database.resultDao().insertResult(Result(name = name, height = height, weight = weight, calculatedBmi = rounded))
+                    btn_save.setOnClickListener {
+
+                        if (!et_height.text.isNullOrEmpty() || !et_weight.text.isNullOrEmpty() || !et_name.text.isNullOrEmpty()) {
+
+
+                            database.resultDao().insertResult(
+                                Result(
+                                    name = name,
+                                    height = height,
+                                    weight = weight,
+                                    calculatedBmi = rounded
+                                )
+                            )
+                            Toast.makeText(this, "Successfully saved", Toast.LENGTH_LONG)
+                                .show()
+                        }
+
+                    }
 
 
                 } else {

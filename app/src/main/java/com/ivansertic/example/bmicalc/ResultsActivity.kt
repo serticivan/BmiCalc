@@ -2,9 +2,12 @@ package com.ivansertic.example.bmicalc
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_results.*
+import kotlinx.android.synthetic.main.result_row.*
 
 class ResultsActivity : AppCompatActivity() {
 

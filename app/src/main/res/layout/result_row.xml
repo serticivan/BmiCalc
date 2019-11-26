@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,8 +16,7 @@
         android:textColor="#000"
         android:textSize="22sp"
         android:text="Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/tv_result_height"
@@ -25,8 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_result_name" />
+        android:layout_below="@+id/tv_result_name"/>
 
     <TextView
         android:id="@+id/tv_result_weight"
@@ -35,20 +34,16 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Weight"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_result_height" />
+        android:layout_below="@+id/tv_result_height"/>
 
     <TextView
         android:id="@+id/tv_result_bmi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Bmi"
-        android:textSize="50sp"
         android:textColor="#009688"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_result_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="50sp"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
