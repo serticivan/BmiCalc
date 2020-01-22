@@ -1,6 +1,7 @@
 package com.ivansertic.example.bmicalc
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -12,4 +13,7 @@ interface ResultDao {
 
     @Insert
     fun insertResult(result: Result)
+
+    @Delete
+    fun deleteResult(result: Result)
 }

@@ -3,6 +3,7 @@ package com.ivansertic.example.bmicalc
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -27,9 +28,10 @@ class ResultsActivity : AppCompatActivity() {
 
         val allResults = database.resultDao().getAllResults()
 
+
         rv_results.apply {
             layoutManager = LinearLayoutManager(this@ResultsActivity)
-            adapter = ResultsAdapter(allResults)
+            adapter = ResultsAdapter(allResults, this@ResultsActivity)
         }
     }
 }
